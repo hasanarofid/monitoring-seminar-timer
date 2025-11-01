@@ -1,0 +1,641 @@
+/* Base styling untuk layar monitoring */
+.monitoring-screen {
+  width: 100vw;
+  height: 100vh;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: env(safe-area-inset-top, 0); /* Support untuk safe area di iOS */
+}
+
+/* Fullscreen toggle button */
+.fullscreen-toggle {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10000;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+/* Adjust button position saat fullscreen */
+.monitoring-screen:fullscreen .fullscreen-toggle,
+.monitoring-screen:-webkit-full-screen .fullscreen-toggle,
+.monitoring-screen:-moz-full-screen .fullscreen-toggle,
+.monitoring-screen:-ms-fullscreen .fullscreen-toggle {
+  top: calc(env(safe-area-inset-top, 0) + 1.5rem);
+}
+
+.fullscreen-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.1);
+}
+
+.fullscreen-toggle:active {
+  transform: scale(0.95);
+}
+
+.fullscreen-toggle svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Content container */
+.monitoring-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  padding-top: 4rem; /* Tambahan padding atas untuk fullscreen notification bar */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Timer display sederhana */
+.timer-display-simple {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 100%;
+  max-width: 100vw;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+.timer-label-simple {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.timer-label-simple.warning {
+  color: #ff4444;
+  text-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+}
+
+.timer-value-container {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+  transition: all 0.3s ease;
+}
+
+.timer-value-sign {
+  font-size: 20rem;
+  font-weight: 600;
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+  line-height: 1;
+  text-align: center;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+  box-sizing: border-box;
+  overflow: visible;
+  flex-shrink: 0;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  margin-right: 0.2em;
+}
+
+.timer-value-sign.warning {
+  color: #ff4444;
+  text-shadow: 0 0 40px rgba(255, 68, 68, 0.6), 0 0 80px rgba(255, 68, 68, 0.4);
+  animation: pulse-red 1s ease-in-out infinite;
+}
+
+/* Fullscreen container adjustment */
+.monitoring-screen:fullscreen .timer-value-container,
+.monitoring-screen:-webkit-full-screen .timer-value-container,
+.monitoring-screen:-moz-full-screen .timer-value-container,
+.monitoring-screen:-ms-fullscreen .timer-value-container {
+  width: 100%;
+  max-width: calc(100vw - 12rem); /* Kurangi dengan padding kiri-kanan */
+  overflow: visible;
+  box-sizing: border-box;
+  flex-wrap: nowrap;
+}
+
+.timer-value-main {
+  font-size: 20rem;
+  font-weight: 600;
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+  line-height: 1;
+  text-align: center;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+  box-sizing: border-box;
+  overflow: visible;
+  flex-shrink: 0;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.timer-value-main.warning {
+  color: #ff4444;
+  text-shadow: 0 0 40px rgba(255, 68, 68, 0.6), 0 0 80px rgba(255, 68, 68, 0.4);
+  animation: pulse-red 1s ease-in-out infinite;
+}
+
+.timer-value-seconds {
+  font-size: 20rem; /* Font size sama dengan main */
+  font-weight: 600;
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+  line-height: 1;
+  text-align: center;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+  box-sizing: border-box;
+  overflow: visible;
+  flex-shrink: 0;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.timer-value-seconds.warning {
+  color: #ff4444;
+  text-shadow: 0 0 40px rgba(255, 68, 68, 0.6), 0 0 80px rgba(255, 68, 68, 0.4);
+  animation: pulse-red 1s ease-in-out infinite;
+}
+
+@keyframes pulse-red {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 40px rgba(255, 68, 68, 0.6), 0 0 80px rgba(255, 68, 68, 0.4);
+  }
+  50% {
+    opacity: 0.9;
+    text-shadow: 0 0 60px rgba(255, 68, 68, 0.8), 0 0 100px rgba(255, 68, 68, 0.6);
+  }
+}
+
+/* Loading state */
+.monitoring-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.monitoring-loading p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Empty state */
+.monitoring-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.empty-content {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4rem;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  max-width: 600px;
+}
+
+.empty-icon {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+}
+
+.empty-content h2 {
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.empty-content p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive untuk berbagai ukuran TV */
+
+/* TV Kecil (1024px - 1366px) */
+@media (max-width: 1366px) {
+  .timer-value-main,
+  .timer-value-sign {
+    font-size: clamp(10rem, 12vw, 16rem);
+  }
+  
+  .timer-value-seconds {
+    font-size: clamp(10rem, 12vw, 16rem);
+  }
+
+  .timer-label-simple {
+    font-size: 1.8rem;
+  }
+  
+  /* Fullscreen adjustment */
+  .monitoring-screen:fullscreen .timer-value-main,
+  .monitoring-screen:fullscreen .timer-value-sign,
+  .monitoring-screen:-webkit-full-screen .timer-value-main,
+  .monitoring-screen:-webkit-full-screen .timer-value-sign {
+    font-size: clamp(5rem, 10vw, 14rem);
+  }
+  
+  .monitoring-screen:fullscreen .timer-value-seconds,
+  .monitoring-screen:-webkit-full-screen .timer-value-seconds {
+    font-size: clamp(5rem, 10vw, 14rem);
+  }
+}
+
+/* TV Sedang (768px - 1024px) */
+@media (max-width: 1024px) {
+  .timer-value-main,
+  .timer-value-sign {
+    font-size: clamp(8rem, 10vw, 12rem);
+  }
+  
+  .timer-value-seconds {
+    font-size: clamp(8rem, 10vw, 12rem);
+  }
+
+  .timer-label-simple {
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+  }
+  
+  /* Fullscreen adjustment */
+  .monitoring-screen:fullscreen .timer-value-main,
+  .monitoring-screen:fullscreen .timer-value-sign,
+  .monitoring-screen:-webkit-full-screen .timer-value-main,
+  .monitoring-screen:-webkit-full-screen .timer-value-sign {
+    font-size: clamp(4.5rem, 8vw, 10rem);
+  }
+  
+  .monitoring-screen:fullscreen .timer-value-seconds,
+  .monitoring-screen:-webkit-full-screen .timer-value-seconds {
+    font-size: clamp(4.5rem, 8vw, 10rem);
+  }
+}
+
+/* Tablet (768px) */
+@media (max-width: 768px) {
+  .timer-value-main,
+  .timer-value-sign {
+    font-size: clamp(6rem, 8vw, 10rem);
+  }
+  
+  .timer-value-seconds {
+    font-size: clamp(6rem, 8vw, 10rem);
+  }
+
+  .timer-label-simple {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+  }
+  
+  /* Fullscreen adjustment */
+  .monitoring-screen:fullscreen .timer-value-main,
+  .monitoring-screen:fullscreen .timer-value-sign,
+  .monitoring-screen:-webkit-full-screen .timer-value-main,
+  .monitoring-screen:-webkit-full-screen .timer-value-sign {
+    font-size: clamp(4rem, 7vw, 8rem);
+  }
+  
+  .monitoring-screen:fullscreen .timer-value-seconds,
+  .monitoring-screen:-webkit-full-screen .timer-value-seconds {
+    font-size: clamp(4rem, 7vw, 8rem);
+  }
+
+  .fullscreen-toggle {
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .fullscreen-toggle svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Mobile (480px) */
+@media (max-width: 480px) {
+  .timer-value-main,
+  .timer-value-sign {
+    font-size: clamp(4rem, 6vw, 8rem);
+  }
+  
+  .timer-value-seconds {
+    font-size: clamp(4rem, 6vw, 8rem);
+  }
+  
+  /* Fullscreen adjustment */
+  .monitoring-screen:fullscreen .timer-value-main,
+  .monitoring-screen:fullscreen .timer-value-sign,
+  .monitoring-screen:-webkit-full-screen .timer-value-main,
+  .monitoring-screen:-webkit-full-screen .timer-value-sign {
+    font-size: clamp(3rem, 5vw, 6rem);
+  }
+  
+  .monitoring-screen:fullscreen .timer-value-seconds,
+  .monitoring-screen:-webkit-full-screen .timer-value-seconds {
+    font-size: clamp(3rem, 5vw, 6rem);
+  }
+
+  .timer-label-simple {
+    font-size: 1rem;
+    letter-spacing: 2px;
+  }
+
+  .fullscreen-toggle {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 36px;
+    height: 36px;
+  }
+
+  .fullscreen-toggle svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* TV Besar (1920px+) */
+@media (min-width: 1920px) {
+  .timer-value-main,
+  .timer-value-sign {
+    font-size: clamp(20rem, 25vw, 28rem);
+  }
+  
+  .timer-value-seconds {
+    font-size: clamp(20rem, 25vw, 28rem);
+  }
+  
+  /* Fullscreen adjustment */
+  .monitoring-screen:fullscreen .timer-value-main,
+  .monitoring-screen:fullscreen .timer-value-sign,
+  .monitoring-screen:-webkit-full-screen .timer-value-main,
+  .monitoring-screen:-webkit-full-screen .timer-value-sign {
+    font-size: clamp(14rem, 18vw, 22rem);
+  }
+  
+  .monitoring-screen:fullscreen .timer-value-seconds,
+  .monitoring-screen:-webkit-full-screen .timer-value-seconds {
+    font-size: clamp(14rem, 18vw, 22rem);
+  }
+
+  .timer-label-simple {
+    font-size: 2.5rem;
+    letter-spacing: 6px;
+  }
+}
+
+/* TV Extra Besar (2560px+) */
+@media (min-width: 2560px) {
+  .timer-value-main,
+  .timer-value-sign {
+    font-size: clamp(28rem, 30vw, 35rem);
+  }
+  
+  .timer-value-seconds {
+    font-size: clamp(28rem, 30vw, 35rem);
+  }
+  
+  /* Fullscreen adjustment */
+  .monitoring-screen:fullscreen .timer-value-main,
+  .monitoring-screen:fullscreen .timer-value-sign,
+  .monitoring-screen:-webkit-full-screen .timer-value-main,
+  .monitoring-screen:-webkit-full-screen .timer-value-sign {
+    font-size: clamp(18rem, 22vw, 28rem);
+  }
+  
+  .monitoring-screen:fullscreen .timer-value-seconds,
+  .monitoring-screen:-webkit-full-screen .timer-value-seconds {
+    font-size: clamp(18rem, 22vw, 28rem);
+  }
+
+  .timer-label-simple {
+    font-size: 3rem;
+    letter-spacing: 8px;
+  }
+}
+
+/* Ultra Wide (3440px+) */
+@media (min-width: 3440px) {
+  .timer-value-main,
+  .timer-value-sign {
+    font-size: clamp(35rem, 35vw, 45rem);
+  }
+  
+  .timer-value-seconds {
+    font-size: clamp(35rem, 35vw, 45rem);
+  }
+  
+  /* Fullscreen adjustment */
+  .monitoring-screen:fullscreen .timer-value-main,
+  .monitoring-screen:fullscreen .timer-value-sign,
+  .monitoring-screen:-webkit-full-screen .timer-value-main,
+  .monitoring-screen:-webkit-full-screen .timer-value-sign {
+    font-size: clamp(22rem, 26vw, 35rem);
+  }
+  
+  .monitoring-screen:fullscreen .timer-value-seconds,
+  .monitoring-screen:-webkit-full-screen .timer-value-seconds {
+    font-size: clamp(22rem, 26vw, 35rem);
+  }
+
+  .timer-label-simple {
+    font-size: 3.5rem;
+    letter-spacing: 10px;
+  }
+}
+
+/* Fullscreen mode adjustments */
+.monitoring-screen:fullscreen,
+.monitoring-screen:-webkit-full-screen,
+.monitoring-screen:-moz-full-screen,
+.monitoring-screen:-ms-fullscreen {
+  background: #000000;
+}
+
+/* Adjust content position saat fullscreen untuk menghindari notification bar */
+.monitoring-screen:fullscreen .monitoring-content,
+.monitoring-screen:-webkit-full-screen .monitoring-content,
+.monitoring-screen:-moz-full-screen .monitoring-content,
+.monitoring-screen:-ms-fullscreen .monitoring-content {
+  padding-top: 8rem; /* Extra padding untuk fullscreen notification bar */
+  padding-bottom: 2rem;
+  padding-left: 6rem; /* Increased padding untuk menghindari potongan */
+  padding-right: 6rem; /* Increased padding untuk menghindari potongan */
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  max-width: 100vw;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Adjust timer display di fullscreen */
+.monitoring-screen:fullscreen .timer-display-simple,
+.monitoring-screen:-webkit-full-screen .timer-display-simple,
+.monitoring-screen:-moz-full-screen .timer-display-simple,
+.monitoring-screen:-ms-fullscreen .timer-display-simple {
+  width: 100%;
+  max-width: calc(100vw - 12rem); /* Kurangi dengan padding kiri-kanan (6rem x 2) */
+  padding: 0;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+/* Adjust font size saat fullscreen untuk menghindari overflow */
+.monitoring-screen:fullscreen .timer-value-main,
+.monitoring-screen:fullscreen .timer-value-sign,
+.monitoring-screen:-webkit-full-screen .timer-value-main,
+.monitoring-screen:-webkit-full-screen .timer-value-sign,
+.monitoring-screen:-moz-full-screen .timer-value-main,
+.monitoring-screen:-moz-full-screen .timer-value-sign,
+.monitoring-screen:-ms-fullscreen .timer-value-main,
+.monitoring-screen:-ms-fullscreen .timer-value-sign {
+  font-size: clamp(5rem, 10vw, 16rem); /* Reduced font size untuk fullscreen */
+  max-width: 100%;
+  overflow: visible;
+  text-overflow: clip;
+  word-break: keep-all;
+}
+
+.monitoring-screen:fullscreen .timer-value-seconds,
+.monitoring-screen:-webkit-full-screen .timer-value-seconds,
+.monitoring-screen:-moz-full-screen .timer-value-seconds,
+.monitoring-screen:-ms-fullscreen .timer-value-seconds {
+  font-size: clamp(5rem, 10vw, 16rem); /* Font size sama dengan main saat fullscreen */
+  max-width: 100%;
+  overflow: visible;
+  word-break: keep-all;
+}
+
+/* Untuk browser yang memiliki notification bar yang lebih tinggi */
+@media (min-height: 800px) {
+  .monitoring-screen:fullscreen .monitoring-content,
+  .monitoring-screen:-webkit-full-screen .monitoring-content,
+  .monitoring-screen:-moz-full-screen .monitoring-content,
+  .monitoring-screen:-ms-fullscreen .monitoring-content {
+    padding-top: 10rem;
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+  
+  .monitoring-screen:fullscreen .timer-display-simple,
+  .monitoring-screen:-webkit-full-screen .timer-display-simple {
+    max-width: calc(100vw - 12rem);
+  }
+  
+  .monitoring-screen:fullscreen .timer-value-container,
+  .monitoring-screen:-webkit-full-screen .timer-value-container {
+    max-width: calc(100vw - 12rem);
+  }
+}
+
+/* Untuk layar yang lebih kecil (mobile) */
+@media (max-width: 768px) {
+  .monitoring-screen:fullscreen .monitoring-content,
+  .monitoring-screen:-webkit-full-screen .monitoring-content,
+  .monitoring-screen:-moz-full-screen .monitoring-content,
+  .monitoring-screen:-ms-fullscreen .monitoring-content {
+    padding-top: 6rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  .monitoring-screen:fullscreen .timer-display-simple,
+  .monitoring-screen:-webkit-full-screen .timer-display-simple {
+    max-width: calc(100vw - 4rem);
+  }
+  
+  .monitoring-screen:fullscreen .timer-value-container,
+  .monitoring-screen:-webkit-full-screen .timer-value-container {
+    max-width: calc(100vw - 4rem);
+  }
+}
+
+/* Untuk layar mobile kecil */
+@media (max-width: 480px) {
+  .monitoring-screen:fullscreen .monitoring-content,
+  .monitoring-screen:-webkit-full-screen .monitoring-content,
+  .monitoring-screen:-moz-full-screen .monitoring-content,
+  .monitoring-screen:-ms-fullscreen .monitoring-content {
+    padding-top: 5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  .monitoring-screen:fullscreen .timer-display-simple,
+  .monitoring-screen:-webkit-full-screen .timer-display-simple {
+    max-width: calc(100vw - 3rem);
+  }
+  
+  .monitoring-screen:fullscreen .timer-value-container,
+  .monitoring-screen:-webkit-full-screen .timer-value-container {
+    max-width: calc(100vw - 3rem);
+  }
+}
+
+/* Hide fullscreen button ketika sudah fullscreen (optional, bisa di-uncomment jika ingin) */
+/*
+.monitoring-screen:fullscreen .fullscreen-toggle,
+.monitoring-screen:-webkit-full-screen .fullscreen-toggle,
+.monitoring-screen:-moz-full-screen .fullscreen-toggle,
+.monitoring-screen:-ms-fullscreen .fullscreen-toggle {
+  opacity: 0;
+  pointer-events: none;
+}
+*/

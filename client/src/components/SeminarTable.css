@@ -1,0 +1,179 @@
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.seminar-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.seminar-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.seminar-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.seminar-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.seminar-table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.seminar-table tbody tr:hover {
+  background: #f8f9ff;
+}
+
+.materi-cell {
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-badge {
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-play {
+  background: #4caf50;
+  color: white;
+}
+
+.status-jeda {
+  background: #ff9800;
+  color: white;
+}
+
+.status-selesai {
+  background: #757575;
+  color: white;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-status,
+.btn-action {
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-play {
+  background: #4caf50;
+  color: white;
+}
+
+.btn-play:hover {
+  background: #45a049;
+  transform: scale(1.1);
+}
+
+.btn-pause {
+  background: #ff9800;
+  color: white;
+}
+
+.btn-pause:hover {
+  background: #f57c00;
+  transform: scale(1.1);
+}
+
+.btn-finish {
+  background: #757575;
+  color: white;
+}
+
+.btn-finish:hover {
+  background: #616161;
+  transform: scale(1.1);
+}
+
+.btn-edit {
+  background: #2196f3;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #1976d2;
+  transform: scale(1.1);
+}
+
+.btn-delete {
+  background: #f44336;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #d32f2f;
+  transform: scale(1.1);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #999;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .seminar-table {
+    font-size: 0.85rem;
+  }
+
+  .seminar-table th,
+  .seminar-table td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .materi-cell {
+    max-width: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .btn-status,
+  .btn-action {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .seminar-table {
+    font-size: 0.75rem;
+  }
+
+  .seminar-table th,
+  .seminar-table td {
+    padding: 0.5rem 0.25rem;
+  }
+}
+
