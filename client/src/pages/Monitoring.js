@@ -15,9 +15,18 @@ const Monitoring = () => {
     fetchActiveSeminar();
 
     // Setup socket.io connection (tanpa /api, karena socket.io butuh base URL)
-    const socketUrl = process.env.REACT_APP_API_URL 
-      ? process.env.REACT_APP_API_URL.replace('/api', '')
-      : 'http://localhost:5000';
+    // Di production, gunakan origin yang sama (relative path)
+    // Di development, gunakan localhost:5000
+    let socketUrl;
+    if (process.env.REACT_APP_API_URL) {
+      socketUrl = process.env.REACT_APP_API_URL.replace('/api', '');
+    } else if (process.env.NODE_ENV === 'production') {
+      // Di production, gunakan origin yang sama dengan halaman
+      socketUrl = window.location.origin;
+    } else {
+      // Development mode
+      socketUrl = 'http://localhost:5000';
+    }
     const socket = io(socketUrl);
     
     socket.on('seminarUpdated', (data) => {

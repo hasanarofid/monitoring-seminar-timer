@@ -1,6 +1,22 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// Di production, gunakan relative path (domain yang sama)
+// Di development, gunakan localhost
+// Pastikan build menggunakan NODE_ENV=production untuk production build
+const getApiUrl = () => {
+  // Priority 1: Environment variable REACT_APP_API_URL
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+  // Priority 2: Production mode menggunakan relative path
+  if (process.env.NODE_ENV === 'production') {
+    return '/api';
+  }
+  // Priority 3: Development mode menggunakan localhost
+  return 'http://localhost:5000/api';
+};
+
+const API_URL = getApiUrl();
 
 const api = axios.create({
   baseURL: API_URL,

@@ -1,0 +1,169 @@
+==========================================
+SETELAH CREATE APPLICATION DI CPANEL
+==========================================
+
+Setelah Anda klik "CREATE" di form Create Application,
+ikuti langkah-langkah berikut:
+
+==========================================
+LANGKAH 1: CATAT PORT YANG DIBERIKAN CPANEL
+==========================================
+
+Setelah aplikasi dibuat, cPanel akan menampilkan informasi:
+- Application URL
+- Port yang digunakan (misal: 5001, 5002, atau port lain)
+- Status aplikasi
+
+⚠️ PENTING: Catat PORT ini! 
+Contoh: PORT = 5001 atau PORT = 5002
+
+==========================================
+LANGKAH 2: UPDATE FILE .env DENGAN PORT YANG BENAR
+==========================================
+
+Cara Update via File Manager cPanel:
+
+1. Buka File Manager di cPanel
+2. Masuk ke folder: /public_html/monitoring/
+3. Cari file: .env
+4. Klik kanan file .env → pilih "Edit" atau "Code Edit"
+5. Cari baris: PORT=5000
+6. Ubah menjadi: PORT=[PORT_DARI_CPANEL]
+   Contoh: PORT=5001
+7. Klik "Save Changes"
+
+Cara Update via FileZilla:
+
+1. Connect FileZilla ke server
+2. Navigasi ke: /public_html/monitoring/
+3. Download file .env ke komputer lokal
+4. Edit file .env di komputer lokal:
+   - Buka dengan text editor (Notepad++, VS Code, dll)
+   - Cari: PORT=5000
+   - Ubah menjadi: PORT=[PORT_DARI_CPANEL]
+   - Save
+5. Upload ulang file .env ke server (replace existing)
+
+Contoh file .env setelah update:
+--------------------------------
+DB_HOST=localhost
+DB_USER=solz1468_solkit
+DB_PASSWORD=DemiAllah@1
+DB_NAME=solz1468_monitoring
+PORT=5001           ← Ganti dengan port dari cPanel
+NODE_ENV=production
+--------------------------------
+
+==========================================
+LANGKAH 3: TAMBAHKAN ENVIRONMENT VARIABLES DI CPANEL
+==========================================
+
+Di halaman Node.js Application yang sudah dibuat:
+
+1. Scroll ke bawah, cari bagian "Environment variables"
+2. Klik tombol "+ ADD VARIABLE" (biru)
+3. Tambahkan variabel berikut satu per satu:
+
+   ┌─────────────────────────────────────┐
+   │ Variable 1:                         │
+   │ Name:  DB_HOST                      │
+   │ Value: localhost                    │
+   │ Klik "Add" atau "Save"              │
+   └─────────────────────────────────────┘
+
+   ┌─────────────────────────────────────┐
+   │ Variable 2:                         │
+   │ Name:  DB_USER                      │
+   │ Value: solz1468_solkit             │
+   │ Klik "Add" atau "Save"              │
+   └─────────────────────────────────────┘
+
+   ┌─────────────────────────────────────┐
+   │ Variable 3:                         │
+   │ Name:  DB_PASSWORD                  │
+   │ Value: DemiAllah@1                 │
+   │ Klik "Add" atau "Save"             │
+   └─────────────────────────────────────┘
+
+   ┌─────────────────────────────────────┐
+   │ Variable 4:                         │
+   │ Name:  DB_NAME                      │
+   │ Value: solz1468_monitoring         │
+   │ Klik "Add" atau "Save"              │
+   └─────────────────────────────────────┘
+
+   ┌─────────────────────────────────────┐
+   │ Variable 5:                         │
+   │ Name:  NODE_ENV                     │
+   │ Value: production                   │
+   │ Klik "Add" atau "Save"              │
+   └─────────────────────────────────────┘
+
+   ┌─────────────────────────────────────┐
+   │ Variable 6:                         │
+   │ Name:  PORT                         │
+   │ Value: [PORT_DARI_CPANEL]          │
+   │      (misal: 5001)                  │
+   │ Klik "Add" atau "Save"              │
+   └─────────────────────────────────────┘
+
+⚠️ CATAT: Environment variables di cPanel memiliki prioritas
+lebih tinggi daripada file .env. Jadi lebih baik isi di sini.
+
+Setelah semua variabel ditambahkan, Anda akan melihat:
+┌─────────────────────────────────────┐
+│ Environment variables               │
+│ DB_HOST = localhost                 │
+│ DB_USER = solz1468_solkit          │
+│ DB_PASSWORD = DemiAllah@1         │
+│ DB_NAME = solz1468_monitoring      │
+│ NODE_ENV = production              │
+│ PORT = 5001                        │
+└─────────────────────────────────────┘
+
+==========================================
+LANGKAH 4: RESTART APLIKASI
+==========================================
+
+Setelah update PORT dan environment variables:
+
+1. Di halaman Node.js App
+2. Cari tombol "Restart App" atau "Reload App"
+3. Klik tombol tersebut
+4. Tunggu beberapa detik
+5. Status akan berubah menjadi "Running"
+
+==========================================
+LANGKAH 5: CEK LOG (VERIFIKASI)
+==========================================
+
+1. Di halaman Node.js App
+2. Klik tab "Logs" atau "View Logs"
+3. Cek apakah ada pesan:
+
+   ✅ "Connected to MySQL database" = BERHASIL!
+   ✅ "Table seminars ready" = BERHASIL!
+   ✅ "Server running on port 5001" = BERHASIL!
+
+   ❌ "Error connecting to MySQL" = Periksa DB credentials
+   ❌ "Port already in use" = Periksa PORT di .env
+   ❌ "Cannot find module" = Jalankan npm install
+
+==========================================
+CATATAN PENTING:
+==========================================
+
+1. File .env dan Environment Variables di cPanel
+   keduanya bisa digunakan. Environment Variables
+   lebih prioritas.
+
+2. Jika ada error, periksa:
+   - PORT sudah sesuai dengan port dari cPanel?
+   - Database credentials sudah benar?
+   - npm install sudah jalan?
+   - File server/index.js ada dan benar?
+
+3. Setelah restart, tunggu 5-10 detik baru test di browser.
+
+==========================================
+

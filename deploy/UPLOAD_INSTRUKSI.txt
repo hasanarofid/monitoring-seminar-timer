@@ -1,0 +1,107 @@
+==========================================
+CARA UPLOAD VIA FILEZILLA KE CPANEL
+==========================================
+
+LANGKAH 1: BUKA FILEZILLA
+   - Connect ke server cPanel Anda dengan credentials FTP/SFTP
+   - Host: ftp.solusicodekata.com atau IP server
+   - Username: username cPanel Anda
+   - Password: password cPanel Anda
+   - Port: 21 (FTP) atau 22 (SFTP)
+
+LANGKAH 2: NAVIGASI KE FOLDER SUBDOMAIN
+   - Di FileZilla, navigasi ke: /public_html/monitoring/
+   - Pastikan folder ini ada (atau buat jika belum ada)
+   - Ini adalah folder root untuk subdomain Anda
+
+LANGKAH 3: UPLOAD SEMUA ISI FOLDER DEPLOY/
+   ✅ Upload folder server/ → menjadi server/
+   ✅ Upload folder public/ → menjadi public/
+   ✅ Upload file package.json → ke root folder
+   ✅ (Opsional) Upload ENV_TEMPLATE.txt sebagai referensi
+
+   ⚠️ PASTIKAN: Upload isi folder deploy/, bukan folder deploy/ itu sendiri
+   Struktur setelah upload:
+   /public_html/monitoring/
+   ├── server/
+   ├── public/
+   └── package.json
+
+LANGKAH 4: BUAT FILE .env DI ROOT FOLDER SERVER
+   - Di File Manager cPanel (atau FileZilla), buka /public_html/monitoring/
+   - Buat file baru bernama: .env
+   - Edit file .env dan isi dengan:
+     
+     DB_HOST=localhost
+     DB_USER=solz1468_solkit
+     DB_PASSWORD=DemiAllah@1
+     DB_NAME=solz1468_monitoring
+     PORT=5000
+     NODE_ENV=production
+
+   ⚠️ PORT=5000 akan di-update nanti setelah create Node.js App
+
+LANGKAH 5: SETUP NODE.JS DI CPANEL (Lihat SETUP_CPANEL_LANGKAH.txt)
+   - Buka Node.js Selector di cPanel
+   - Klik "CREATE APPLICATION"
+   - Isi form:
+     * Node.js version: Pilih versi terbaru (18.x atau 20.x)
+     * Application mode: Production ✅
+     * Application root: /public_html/monitoring
+     * Application URL: monitoring.solusicodekata.com
+     * Application startup file: server/index.js
+   - Klik "CREATE"
+   - CATAT PORT yang diberikan cPanel
+
+LANGKAH 6: UPDATE FILE .env DENGAN PORT YANG BENAR
+   - Edit file .env di server
+   - Ganti PORT=5000 dengan PORT dari cPanel (misal: PORT=5001)
+
+LANGKAH 7: TAMBAHKAN ENVIRONMENT VARIABLES (RECOMMENDED)
+   - Di halaman Node.js App yang sudah dibuat
+   - Klik "+ ADD VARIABLE" di bagian Environment variables
+   - Tambahkan semua variabel dari file .env
+   - Ini lebih prioritas daripada file .env
+
+LANGKAH 8: INSTALL DEPENDENCIES
+   - Via Node.js Selector: Klik "NPM Install" atau "Run NPM Install"
+   - ATAU via Terminal SSH: cd /public_html/monitoring && npm install
+
+LANGKAH 9: RESTART APLIKASI
+   - Via Node.js Selector: Klik "Restart App" atau "Reload App"
+
+LANGKAH 10: TEST
+   - Buka browser: https://monitoring.solusicodekata.com
+   - Test semua fitur aplikasi
+
+📖 UNTUK LANGKAH DETAIL: Lihat file SETUP_CPANEL_LANGKAH.txt
+
+==========================================
+STRUKTUR FOLDER SETELAH UPLOAD:
+==========================================
+
+monitoring/
+├── server/
+│   └── index.js
+├── public/
+│   ├── index.html
+│   ├── static/
+│   └── ...
+├── package.json
+├── .env          ← Buat file ini setelah upload
+└── node_modules/ ← Auto-generated setelah npm install
+
+==========================================
+CATATAN PENTING:
+==========================================
+
+- Pastikan semua file dan folder ter-upload dengan benar
+- File .env HARUS di root folder (sama level dengan server/)
+- Ganti PORT di .env sesuai port dari cPanel
+- Pastikan database sudah diimport ke server
+- Jika API masih pakai localhost, lihat REBUILD_INSTRUKSI.txt
+
+Untuk panduan lengkap, lihat: ../DEPLOY_CPANEL.md
+
+==========================================
+

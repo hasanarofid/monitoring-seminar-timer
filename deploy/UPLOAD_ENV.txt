@@ -1,0 +1,47 @@
+==========================================
+CARA UPLOAD FILE .env VIA FILEZILLA
+==========================================
+
+File .env tidak bisa dibuat langsung karena ada di .gitignore.
+Gunakan file "env_file.txt" yang sudah tersedia.
+
+LANGKAH UPLOAD .env:
+
+1. Di FileZilla, setelah upload semua file lain:
+   - Folder server/ ✅
+   - Folder public/ ✅
+   - File package.json ✅
+
+2. Upload file "env_file.txt" ke folder /public_html/monitoring/
+
+3. Di File Manager cPanel:
+   - Masuk ke folder /public_html/monitoring/
+   - Cari file: env_file.txt
+   - Rename file menjadi: .env
+     (Klik kanan → Rename → hapus "env_file.txt", ketik ".env")
+
+4. Setelah rename menjadi .env, edit file tersebut:
+   - Klik kanan → Edit atau Code Edit
+   - Pastikan isinya sudah benar (sudah benar)
+   - PORT=5000 akan di-update nanti setelah create app
+
+5. Save file .env
+
+ISI FILE .env:
+--------------------------------
+DB_HOST=localhost
+DB_USER=solz1468_solkit
+DB_PASSWORD=DemiAllah@1
+DB_NAME=solz1468_monitoring
+PORT=5000
+NODE_ENV=production
+--------------------------------
+
+⚠️ CATAT: PORT=5000 akan di-update nanti
+Setelah create application di cPanel, ganti PORT=5000
+dengan PORT yang diberikan cPanel.
+
+Lihat file AFTER_CREATE_APP.txt untuk langkah selanjutnya.
+
+==========================================
+

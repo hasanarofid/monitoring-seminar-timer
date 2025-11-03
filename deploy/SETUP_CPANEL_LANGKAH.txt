@@ -1,0 +1,173 @@
+==========================================
+LANGKAH SETUP CPANEL - STEP BY STEP
+==========================================
+
+LANGKAH 1: UPLOAD FILE KE CPANEL VIA FILEZILLA
+==========================================
+1. Buka FileZilla, connect ke server cPanel Anda
+2. Navigasi ke folder: /public_html/monitoring
+3. Upload semua isi folder deploy/ ke folder /public_html/monitoring:
+   ✅ Upload folder server/ → menjadi server/
+   ✅ Upload folder public/ → menjadi public/
+   ✅ Upload file package.json → ke root folder
+
+Setelah upload, struktur folder di server:
+/public_html/monitoring/
+├── server/
+│   └── index.js
+├── public/
+│   ├── index.html
+│   ├── static/
+│   └── ...
+└── package.json
+
+LANGKAH 2: BUAT FILE .env DI SERVER
+==========================================
+1. Di File Manager cPanel, buka folder /public_html/monitoring
+2. Buat file baru bernama: .env
+   (Copy dari ENV_TEMPLATE.txt jika sudah ter-upload)
+3. Edit file .env dan isi dengan:
+   
+   DB_HOST=localhost
+   DB_USER=solz1468_solkit
+   DB_PASSWORD=DemiAllah@1
+   DB_NAME=solz1468_monitoring
+   PORT=5000
+   NODE_ENV=production
+
+   ⚠️ CATAT: PORT=5000 akan di-update nanti setelah create app
+
+LANGKAH 3: CREATE NODE.JS APPLICATION DI CPANEL
+==========================================
+1. Di cPanel, buka "Node.js Selector" atau "Setup Node.js App"
+2. Klik tab "CREATE APPLICATION" atau tombol "CREATE"
+3. Isi form dengan data berikut:
+
+   ┌─────────────────────────────────────┐
+   │ Node.js version:                    │
+   │ Pilih versi terbaru (18.x atau 20.x)│
+   │ (JANGAN gunakan 10.24.1, terlalu    │
+   │  lama, pilih versi yang lebih baru)  │
+   └─────────────────────────────────────┘
+
+   ┌─────────────────────────────────────┐
+   │ Application mode:                   │
+   │ Ubah dari "Development" ke         │
+   │ "Production" ✅                     │
+   └─────────────────────────────────────┘
+
+   ┌─────────────────────────────────────┐
+   │ Application root:                   │
+   │ /public_html/monitoring ✅          │
+   │ (Pastikan path ini benar)           │
+   └─────────────────────────────────────┘
+
+   ┌─────────────────────────────────────┐
+   │ Application URL:                    │
+   │ monitoring.solusicodekata.com ✅    │
+   └─────────────────────────────────────┘
+
+   ┌─────────────────────────────────────┐
+   │ Application startup file:           │
+   │ server/index.js ✅                  │
+   └─────────────────────────────────────┘
+
+4. KLIK TOMBOL "CREATE" (biru di kanan atas)
+
+LANGKAH 4: CATAT PORT YANG DIBERIKAN
+==========================================
+Setelah aplikasi dibuat, cPanel akan memberikan:
+- PORT yang digunakan (misal: 5001, 5002, atau port lain)
+- Mungkin ada informasi lain seperti:
+  * Application URL
+  * Restart URL
+  * dll
+
+⚠️ PENTING: Catat PORT ini!
+
+LANGKAH 5: UPDATE FILE .env DENGAN PORT YANG BENAR
+==========================================
+1. Buka file .env di File Manager
+2. Edit PORT=5000 menjadi PORT=[PORT_DARI_CPANEL]
+   Contoh: PORT=5001 (sesuai port yang diberikan cPanel)
+
+LANGKAH 6: TAMBAHKAN ENVIRONMENT VARIABLES (OPSIONAL)
+==========================================
+Di halaman Node.js App yang sudah dibuat:
+1. Scroll ke bagian "Environment variables"
+2. Klik tombol "+ ADD VARIABLE"
+3. Tambahkan variabel berikut satu per satu:
+   
+   Name: DB_HOST          Value: localhost
+   Name: DB_USER          Value: solz1468_solkit
+   Name: DB_PASSWORD      Value: DemiAllah@1
+   Name: DB_NAME          Value: solz1468_monitoring
+   Name: NODE_ENV         Value: production
+   Name: PORT             Value: [PORT_DARI_CPANEL]
+
+   ⚠️ CATAT: Environment variables di cPanel bisa lebih 
+   prioritas daripada file .env, jadi lebih baik isi di sini
+
+LANGKAH 7: INSTALL DEPENDENCIES
+==========================================
+1. Di halaman Node.js App yang sudah dibuat
+2. Cari tombol "NPM Install" atau "Run NPM Install"
+3. Klik tombol tersebut
+4. Tunggu sampai proses selesai
+
+   ATAU via Terminal SSH:
+   cd /public_html/monitoring
+   npm install
+
+LANGKAH 8: RESTART APLIKASI
+==========================================
+1. Di halaman Node.js App
+2. Cari tombol "Restart App" atau "Reload App"
+3. Klik tombol tersebut
+4. Tunggu beberapa detik sampai status menjadi "Running"
+
+LANGKAH 9: CEK LOG (JIKA ADA ERROR)
+==========================================
+1. Di halaman Node.js App
+2. Klik tab atau tombol "Logs" atau "View Logs"
+3. Cek apakah ada error:
+   ✅ "Connected to MySQL database" = Berhasil!
+   ✅ "Table seminars ready" = Berhasil!
+   ❌ Error koneksi database = Periksa .env
+   ❌ Error port = Periksa PORT di .env
+
+LANGKAH 10: TEST APLIKASI
+==========================================
+1. Buka browser
+2. Akses: https://monitoring.solusicodekata.com
+3. Test fitur:
+   ✅ Halaman Dashboard bisa dibuka
+   ✅ Bisa create seminar baru
+   ✅ Bisa edit/delete seminar
+   ✅ Halaman Monitoring bisa dibuka
+   ✅ Timer berjalan dengan baik
+
+==========================================
+TROUBLESHOOTING CEPAT
+==========================================
+
+❌ App tidak jalan / Error
+   → Cek Logs di Node.js App
+   → Pastikan .env sudah benar
+   → Pastikan npm install sudah jalan
+
+❌ Database connection failed
+   → Periksa username, password, database name di .env
+   → Pastikan database sudah diimport
+
+❌ 404 Error saat akses halaman
+   → Pastikan folder public/ sudah ter-upload
+   → Pastikan NODE_ENV=production
+
+❌ API tidak bisa diakses
+   → Test langsung: https://monitoring.solusicodekata.com/api/seminars
+   → Jika bisa, berarti API jalan
+   → Jika tidak, cek log server
+
+==========================================
+

@@ -1,0 +1,92 @@
+==========================================
+SUDAH DIPERBAIKI - REBUILD FINAL
+==========================================
+
+✅ Masalah localhost:5000 sudah diperbaiki!
+
+Build React di folder deploy/public/ sudah di-rebuild dengan:
+- API URL menggunakan relative path: /api
+- Socket.io menggunakan window.location.origin (domain yang sama)
+
+==========================================
+LANGKAH YANG PERLU ANDA LAKUKAN:
+==========================================
+
+1. UPLOAD ULANG FOLDER public/ KE SERVER
+
+   Via FileZilla:
+   ✅ Connect ke server
+   ✅ Navigasi ke: /public_html/monitoring/public/
+   ✅ HAPUS SEMUA FILE LAMA di folder public/
+   ✅ Upload SEMUA FILE BARU dari folder deploy/public/
+      (Drag & drop seluruh isi folder deploy/public/ ke public/)
+
+2. CLEAR BROWSER CACHE ATAU GUNAKAN INCOGNITO
+
+   Cara 1: Clear Cache
+   - Tekan Ctrl+Shift+Delete (Windows/Linux)
+   - Atau Cmd+Shift+Delete (Mac)
+   - Pilih "Cached images and files"
+   - Clear data
+
+   Cara 2: Incognito/Private Mode
+   - Tekan Ctrl+Shift+N (Chrome) atau Ctrl+Shift+P (Firefox)
+   - Buka aplikasi dalam mode ini
+
+   Cara 3: Hard Refresh
+   - Tekan Ctrl+F5 (Windows/Linux)
+   - Atau Cmd+Shift+R (Mac)
+
+3. RESTART APLIKASI DI CPANEL
+
+   - Buka Node.js Selector di cPanel
+   - Pilih aplikasi monitoring Anda
+   - Klik "Restart App"
+   - Tunggu status menjadi "Running"
+
+4. TEST KEMBALI
+
+   - Buka: https://monitoring.solusicodekata.com
+   - Tekan F12 untuk buka Developer Tools
+   - Buka tab "Network"
+   - Refresh halaman (Ctrl+F5)
+   - Cek request API:
+     ✅ Seharusnya: GET /api/seminars
+     ❌ Bukan lagi: GET http://localhost:5000/api/seminars
+
+==========================================
+VERIFIKASI:
+==========================================
+
+Setelah upload ulang dan restart:
+
+✅ Network tab: Request ke /api/seminars (relative)
+✅ Tidak ada lagi error connection refused
+✅ Aplikasi bisa load data seminar
+✅ Halaman Dashboard bisa menampilkan data
+
+==========================================
+MASALAH MASIH ADA?
+==========================================
+
+Jika masih ada masalah setelah langkah di atas:
+
+1. Pastikan folder public/ benar-benar sudah di-upload ulang
+   - File harus fresh dari deploy/public/
+
+2. Pastikan browser cache sudah di-clear
+   - Coba buka di Incognito mode
+
+3. Pastikan aplikasi sudah di-restart
+   - Cek di Node.js Selector status "Running"
+
+4. Cek log aplikasi di cPanel
+   - Buka tab "Logs" di Node.js App
+   - Lihat apakah ada error
+
+5. Test endpoint API langsung
+   - Buka: https://monitoring.solusicodekata.com/api/seminars
+   - Seharusnya return JSON data
+
+==========================================
+

@@ -1,0 +1,28 @@
+==========================================
+INSTRUKSI REBUILD REACT DENGAN API URL PRODUCTION
+==========================================
+
+Jika build React masih menggunakan localhost, ikuti langkah ini:
+
+1. Di folder client/, buat file .env dengan isi:
+   REACT_APP_API_URL=https://monitoring.solusicodekata.com/api
+
+2. Build ulang React:
+   cd client
+   npm run build
+
+3. Copy hasil build ke folder deploy/public/:
+   cp -r client/build/* ../deploy/public/
+
+4. Upload ulang folder deploy/public/ ke server
+
+ATAU:
+
+Gunakan relative path dengan mengupdate client/src/services/api.js
+Ubah API_URL menjadi:
+const API_URL = process.env.REACT_APP_API_URL || '/api';
+
+Lalu rebuild dan upload ulang.
+
+==========================================
+

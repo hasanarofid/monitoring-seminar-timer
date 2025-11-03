@@ -1,0 +1,9 @@
+DB_HOST=localhost
+DB_USER=solz1468_solkit
+DB_PASSWORD=DemiAllah@1
+DB_NAME=solz1468_monitoring
+PORT=5000
+NODE_ENV=production
+
+注意: Ganti PORT=5000 dengan port yang diberikan cPanel Node.js App setelah setup aplikasi.
+
