@@ -11,15 +11,13 @@ const Monitoring = () => {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    // Initial load dengan loading indicator
-    fetchActiveSeminar(true);
+    fetchActiveSeminar();
 
-    // Polling untuk sync dengan server (setiap 5 detik)
+    // Polling untuk update real-time (setiap 2 detik)
     // Menggantikan Socket.io untuk kompatibilitas dengan PHP backend
-    // Frekuensi dikurangi untuk mengurangi flicker
     const pollingInterval = setInterval(() => {
-      fetchActiveSeminar(false); // Polling tanpa loading indicator
-    }, 5000); // Poll setiap 5 detik (lebih smooth)
+      fetchActiveSeminar();
+    }, 2000); // Poll setiap 2 detik
 
     return () => {
       clearInterval(pollingInterval);
@@ -93,29 +91,14 @@ const Monitoring = () => {
     return () => clearInterval(interval);
   }, [isRunning, seminar]);
 
-  const fetchActiveSeminar = async (showLoading = false) => {
+  const fetchActiveSeminar = async () => {
     try {
-      if (showLoading) {
-        setLoading(true);
-      }
-      
+      setLoading(true);
       const response = await seminarService.getActive();
       const activeSeminar = response.data;
       
       if (activeSeminar) {
-        // Hanya update jika ada perubahan (untuk mengurangi re-render)
-        const newWaktuBerjalan = parseInt(activeSeminar.waktu_berjalan) || 0;
-        const newStatus = activeSeminar.status;
-        
-        // Update seminar hanya jika ada perubahan
-        setSeminar(prevSeminar => {
-          if (!prevSeminar || 
-              prevSeminar.id !== activeSeminar.id || 
-              prevSeminar.status !== newStatus) {
-            return activeSeminar;
-          }
-          return prevSeminar; // Tidak ada perubahan, return previous
-        });
+        setSeminar(activeSeminar);
         
         // Hitung waktu yang sudah berjalan
         if (activeSeminar.waktu_mulai && activeSeminar.status === 'play') {
@@ -137,33 +120,25 @@ const Monitoring = () => {
           
           // Pastikan selisihDetik tidak negatif atau terlalu besar
           if (selisihDetik < 0) {
-            setElapsedTime(newWaktuBerjalan);
+            setElapsedTime(activeSeminar.waktu_berjalan || 0);
           } else {
-            const totalElapsed = newWaktuBerjalan + selisihDetik;
+            const totalElapsed = (parseInt(activeSeminar.waktu_berjalan) || 0) + selisihDetik;
             setElapsedTime(totalElapsed);
           }
           setIsRunning(true);
         } else {
-          setElapsedTime(newWaktuBerjalan);
+          setElapsedTime(parseInt(activeSeminar.waktu_berjalan) || 0);
           setIsRunning(false);
         }
       } else {
-        // Hanya update jika sebelumnya ada seminar
-        setSeminar(prevSeminar => {
-          if (prevSeminar !== null) {
-            return null;
-          }
-          return prevSeminar;
-        });
+        setSeminar(null);
         setElapsedTime(0);
         setIsRunning(false);
       }
     } catch (err) {
       console.error('Error fetching active seminar:', err);
     } finally {
-      if (showLoading) {
-        setLoading(false);
-      }
+      setLoading(false);
     }
   };
 
@@ -228,8 +203,6 @@ const Monitoring = () => {
           {(() => {
             const remainingTime = getRemainingTime();
             const isWarning = remainingTime <= 300 || remainingTime < 0; // 5 menit = 300 detik atau minus
-            const waktuBerjalan = elapsedTime;
-            const waktuBerjalanFormatted = formatTime(waktuBerjalan);
             return (
               <>
                 <span className={`timer-label-simple ${isWarning ? 'warning' : ''}`}>
@@ -253,15 +226,6 @@ const Monitoring = () => {
                       </>
                     );
                   })()}
-                </div>
-                {/* Info waktu berjalan */}
-                <div className="timer-info">
-                  <span className="timer-info-label">Waktu Berjalan:</span>
-                  <span className="timer-info-value">
-                    {String(waktuBerjalanFormatted.hours).padStart(2, '0')}:
-                    {String(waktuBerjalanFormatted.minutes).padStart(2, '0')}:
-                    {String(waktuBerjalanFormatted.secs).padStart(2, '0')}
-                  </span>
                 </div>
               </>
             );

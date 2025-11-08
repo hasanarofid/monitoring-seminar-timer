@@ -98,6 +98,36 @@
   text-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
 }
 
+/* Timer info (waktu berjalan) */
+.timer-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.timer-info-label {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.timer-info-value {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
 .timer-value-container {
   display: flex;
   align-items: baseline;
@@ -109,6 +139,7 @@
   box-sizing: border-box;
   overflow: visible;
   transition: all 0.3s ease;
+  will-change: contents; /* Optimasi untuk smooth animation */
 }
 
 .timer-value-sign {
@@ -158,6 +189,7 @@
   overflow: visible;
   flex-shrink: 0;
   transition: color 0.3s ease, text-shadow 0.3s ease;
+  will-change: contents; /* Optimasi untuk smooth update */
 }
 
 .timer-value-main.warning {
@@ -179,6 +211,7 @@
   overflow: visible;
   flex-shrink: 0;
   transition: color 0.3s ease, text-shadow 0.3s ease;
+  will-change: contents; /* Optimasi untuk smooth update */
 }
 
 .timer-value-seconds.warning {

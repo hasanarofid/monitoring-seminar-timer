@@ -1,0 +1,122 @@
+===========================================
+PERBAIKAN CORS ERROR
+===========================================
+
+Masalah CORS sudah diperbaiki!
+Masalahnya adalah build React masih menggunakan localhost:5000.
+
+===========================================
+PERBAIKAN YANG DILAKUKAN:
+===========================================
+
+✅ 1. File .env di client/
+   - File .env sudah di-rename menjadi .env.development
+   - Build production sekarang menggunakan relative path /api
+
+✅ 2. Rebuild React App
+   - Build sudah di-rebuild dengan API URL yang benar
+   - Menggunakan relative path /api (domain yang sama)
+   - TIDAK ADA lagi localhost:5000 di build
+
+✅ 3. Update Folder deploy_cpanel
+   - Folder deploy_cpanel sudah di-update dengan build yang benar
+   - File static/js/main.*.js sudah menggunakan /api
+   - File index.html sudah di-update
+
+===========================================
+CARA UPDATE DI SERVER:
+===========================================
+
+LANGKAH 1: Upload File Baru
+----------------------------
+1. Login ke cPanel
+2. Buka File Manager
+3. Navigasi ke folder subdomain monitoring.solusicodekata.com
+
+4. Upload file berikut:
+   
+   A. Upload folder static/ yang baru
+      - Hapus folder static/ lama di server
+      - Upload folder static/ baru dari deploy_cpanel/static/
+      - Pastikan file main.*.js yang baru ter-upload
+   
+   B. Upload file index.html yang baru
+      - Ganti file index.html di server
+      - File ini sudah di-update dengan referensi JS baru
+   
+   C. Upload file asset-manifest.json yang baru
+      - Ganti file asset-manifest.json di server
+
+ATAU upload ulang seluruh isi folder deploy_cpanel/ ke server
+
+
+LANGKAH 2: Clear Browser Cache
+-------------------------------
+1. Clear browser cache (Ctrl+Shift+Delete)
+   - Pilih "Cached images and files"
+   - Clear data
+
+2. Atau gunakan Incognito/Private mode
+   - Tekan Ctrl+Shift+N (Chrome) atau Ctrl+Shift+P (Firefox)
+
+3. Atau hard refresh
+   - Tekan Ctrl+F5 (Windows/Linux)
+   - Atau Cmd+Shift+R (Mac)
+
+
+LANGKAH 3: Test
+---------------
+1. Test API:
+   https://monitoring.solusicodekata.com/api/seminars
+   
+   Seharusnya muncul JSON response (bisa [] jika belum ada data)
+
+2. Test Aplikasi:
+   https://monitoring.solusicodekata.com
+   
+   Seharusnya:
+   - ✅ Tidak ada error CORS
+   - ✅ Aplikasi bisa load data seminar
+   - ✅ Dashboard bisa menampilkan data
+
+3. Cek Browser Console (F12):
+   - ✅ Tidak ada error CORS
+   - ✅ Request ke /api/seminars (relative path)
+   - ❌ TIDAK ada lagi request ke localhost:5000
+
+
+===========================================
+VERIFIKASI:
+===========================================
+
+Setelah upload dan clear cache:
+
+✅ Browser Console: Tidak ada error CORS
+✅ Network Tab: Request ke /api/seminars (relative)
+✅ Tidak ada lagi request ke localhost:5000
+✅ Aplikasi bisa load data seminar
+✅ Dashboard bisa menampilkan data
+
+===========================================
+CATATAN:
+===========================================
+
+- Pastikan upload file yang baru (build terbaru)
+- Pastikan clear browser cache setelah update
+- Pastikan file .htaccess sudah di-upload
+- Pastikan folder api/ sudah di-upload
+
+===========================================
+MASALAH MASIH ADA?
+===========================================
+
+Jika masih ada error CORS:
+
+1. Pastikan file static/js/main.*.js sudah di-upload yang baru
+2. Pastikan clear browser cache
+3. Cek browser console (F12) untuk error detail
+4. Test API langsung: https://monitoring.solusicodekata.com/api/seminars
+5. Pastikan file .htaccess sudah di-upload
+
+===========================================
+

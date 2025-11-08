@@ -1,0 +1,157 @@
+===========================================
+INSTRUKSI UPLOAD KE CPANEL
+===========================================
+
+Folder ini SIAP di-upload ke subdomain:
+monitoring.solusicodekata.com
+
+===========================================
+LANGKAH 1: LOGIN KE CPANEL
+===========================================
+
+1. Login ke cPanel Anda
+2. Buka File Manager
+
+===========================================
+LANGKAH 2: NAVIGASI KE FOLDER SUBDOMAIN
+===========================================
+
+1. Di File Manager, navigasi ke folder subdomain:
+   - Biasanya ada di: public_html/monitoring/
+   - Atau: monitoring/
+   - Atau: public_html/monitoring.solusicodekata.com/
+   
+2. Pastikan Anda di ROOT folder subdomain tersebut
+   (Bukan di public_html/ atau folder lain)
+
+===========================================
+LANGKAH 3: UPLOAD SEMUA FILE
+===========================================
+
+CARA 1: Upload via File Manager (Drag & Drop)
+----------------------------------------------
+1. Di File Manager, pastikan folder subdomain sudah dibuka
+2. Klik tombol "Upload" di toolbar
+3. Pilih SEMUA file dan folder dari folder deploy_cpanel/
+4. Drag & drop semua file ke folder subdomain
+5. Tunggu sampai semua file ter-upload
+
+CARA 2: Upload via FileZilla (FTP)
+------------------------------------
+1. Connect ke server via FileZilla
+2. Navigasi ke folder subdomain di server
+3. Upload SEMUA isi folder deploy_cpanel/ ke folder subdomain
+4. Pastikan struktur folder sama seperti di deploy_cpanel/
+
+===========================================
+LANGKAH 4: VERIFIKASI FILE
+===========================================
+
+Pastikan file berikut ada di root folder subdomain:
+
+✅ index.html
+✅ .htaccess
+✅ asset-manifest.json
+✅ brigthon.jpeg (jika ada)
+✅ folder static/ (berisi css/ dan js/)
+✅ folder api/ (berisi config.php, index.php, .htaccess)
+
+===========================================
+LANGKAH 5: SET PERMISSION FILE
+===========================================
+
+1. Di File Manager, klik kanan pada setiap file/folder
+2. Pilih "Change Permissions"
+3. Set permission:
+   - File PHP (.php): 644
+   - File .htaccess: 644
+   - File HTML/CSS/JS: 644
+   - Folder (api/, static/): 755
+
+ATAU via Terminal (jika ada akses SSH):
+----------------------------------------
+chmod 644 *.php *.html *.htaccess
+chmod 755 api static
+
+===========================================
+LANGKAH 6: TEST APLIKASI
+===========================================
+
+1. Test API:
+   Buka browser dan akses:
+   https://monitoring.solusicodekata.com/api/seminars
+   
+   Seharangnya muncul JSON response:
+   - Jika belum ada data: []
+   - Jika ada data: array JSON dengan data seminar
+
+2. Test Aplikasi:
+   Buka browser dan akses:
+   https://monitoring.solusicodekata.com
+   
+   Seharusnya aplikasi bisa diakses dan berfungsi normal
+
+===========================================
+KONFIGURASI DATABASE
+===========================================
+
+Database sudah dikonfigurasi di file:
+api/config.php
+
+Konfigurasi yang sudah di-set:
+- DB_HOST: localhost
+- DB_USER: solz1468_solkit
+- DB_PASSWORD: DemiAllah@1
+- DB_NAME: solz1468_monitoring
+
+TIDAK PERLU EDIT LAGI - SUDAH SIAP!
+
+===========================================
+TROUBLESHOOTING
+===========================================
+
+❌ Error 404 saat akses API
+   → Pastikan file .htaccess sudah di-upload
+   → Pastikan mod_rewrite enabled di server
+   → Cek permission file .htaccess (harus 644)
+
+❌ Error 500 Internal Server Error
+   → Cek error log di cPanel
+   → Pastikan PHP version 7.4+ (cek di Select PHP Version)
+   → Pastikan database credentials benar di api/config.php
+
+❌ Database connection failed
+   → Cek kredensial database di api/config.php
+   → Pastikan database sudah dibuat dan di-import
+   → Pastikan username dan password database benar
+
+❌ Halaman blank / tidak load
+   → Clear browser cache (Ctrl+F5)
+   → Pastikan file index.html ada di root
+   → Pastikan folder static/ ada dan berisi file CSS/JS
+   → Cek browser console (F12) untuk error JavaScript
+
+❌ API tidak bisa diakses dari frontend
+   → Pastikan API URL menggunakan relative path /api
+   → Test API langsung di browser
+   → Cek CORS settings di api/config.php
+
+===========================================
+CATATAN PENTING
+===========================================
+
+✅ Aplikasi ini menggunakan PHP backend (TIDAK PERLU Node.js)
+✅ Real-time update menggunakan polling (setiap 2 detik)
+✅ Database MySQL sudah dikonfigurasi
+✅ Semua file sudah siap di-upload
+
+===========================================
+SELESAI!
+===========================================
+
+Setelah upload dan test berhasil, aplikasi Anda sudah berjalan!
+
+Jika ada masalah, cek bagian Troubleshooting di atas.
+
+===========================================
+

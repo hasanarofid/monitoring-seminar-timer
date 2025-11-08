@@ -1,0 +1,153 @@
+===========================================
+PERBAIKAN RESUME WAKTU - LANJUTKAN DARI JEDA
+===========================================
+
+Masalah waktu reset saat play lagi sudah diperbaiki!
+Sekarang waktu melanjutkan dari jeda, bukan mulai dari awal.
+
+===========================================
+PERBAIKAN YANG DILAKUKAN:
+===========================================
+
+✅ 1. Waktu Melanjutkan dari Jeda
+   - Ketika play lagi setelah jeda, waktu TIDAK di-reset
+   - Waktu melanjutkan dari waktu_berjalan yang sudah ada
+   - waktu_mulai di-update untuk melanjutkan perhitungan
+
+✅ 2. Info Waktu Berjalan di Monitoring
+   - Menampilkan "Waktu Berjalan" di halaman monitoring
+   - Menampilkan total waktu yang sudah berjalan
+   - Update setiap detik (smooth)
+
+✅ 3. Waktu Jeda Tersimpan
+   - Waktu jeda tersimpan di waktu_berjalan
+   - Ketika play lagi, melanjutkan dari waktu jeda
+   - Ketika selesai, waktu total tersimpan
+
+===========================================
+CARA KERJA:
+===========================================
+
+SEBELUM (Masalah):
+- Play → Jeda (2 menit) → Play lagi → Mulai dari 0 ❌
+- Waktu jeda hilang
+
+SESUDAH (Sudah Diperbaiki):
+- Play → Jeda (2 menit) → Play lagi → Lanjut dari 2 menit ✅
+- Waktu jeda tersimpan dan dilanjutkan
+
+CONTOH:
+1. Play seminar (durasi 60 menit)
+2. Jeda setelah 2 menit → waktu_berjalan = 120 detik
+3. Play lagi → waktu melanjutkan dari 120 detik
+4. Jeda lagi setelah 3 menit → waktu_berjalan = 300 detik (120 + 180)
+5. Play lagi → waktu melanjutkan dari 300 detik
+6. Selesai → waktu_berjalan = total waktu yang sudah berjalan
+
+===========================================
+CARA UPDATE DI SERVER:
+===========================================
+
+LANGKAH 1: Rebuild React App
+-----------------------------
+1. Di komputer lokal, masuk ke folder client:
+   cd client
+
+2. Rebuild aplikasi React:
+   npm run build
+
+3. File build akan tersimpan di folder client/build/
+
+
+LANGKAH 2: Upload File Baru
+----------------------------
+1. Login ke cPanel
+2. Buka File Manager
+3. Navigasi ke folder subdomain monitoring.solusicodekata.com
+
+4. Upload file berikut:
+   
+   A. Upload folder static/ yang baru
+      - Hapus folder static/ lama di server
+      - Upload folder static/ baru dari deploy_cpanel/static/
+   
+   B. Upload file index.html yang baru
+      - Ganti file index.html di server
+   
+   C. Upload file asset-manifest.json yang baru
+      - Ganti file asset-manifest.json di server
+   
+   D. Upload file api/index.php yang sudah diperbaiki
+      - Ganti file api/index.php di server
+      (File ini sudah ada di folder deploy_cpanel/api/index.php)
+
+
+LANGKAH 3: Clear Browser Cache
+-------------------------------
+1. Clear browser cache (Ctrl+Shift+Delete)
+   - Pilih "Cached images and files"
+   - Clear data
+
+2. Atau gunakan Incognito/Private mode
+
+3. Atau hard refresh (Ctrl+F5)
+
+
+LANGKAH 4: Test
+---------------
+1. Test Aplikasi:
+   https://monitoring.solusicodekata.com
+   
+   Seharusnya:
+   - ✅ Play → Jeda → Play lagi → Waktu melanjutkan dari jeda
+   - ✅ Info "Waktu Berjalan" tampil di monitoring
+   - ✅ Waktu jeda tersimpan dan dilanjutkan
+   - ✅ Waktu selesai tersimpan dengan benar
+
+2. Test Flow:
+   - Play seminar
+   - Tunggu beberapa detik
+   - Klik Jeda
+   - Cek waktu_berjalan tersimpan
+   - Klik Play lagi
+   - Waktu melanjutkan dari jeda (TIDAK reset)
+
+===========================================
+PERUBAHAN YANG TERJADI:
+===========================================
+
+SEBELUM:
+- Play → Jeda → Play lagi → Mulai dari 0 ❌
+- Waktu jeda hilang
+- Tidak ada info waktu berjalan
+
+SESUDAH:
+- Play → Jeda → Play lagi → Lanjut dari jeda ✅
+- Waktu jeda tersimpan
+- Info "Waktu Berjalan" tampil di monitoring
+- Waktu selesai tersimpan dengan benar
+
+===========================================
+CATATAN:
+===========================================
+
+- Waktu jeda tersimpan di waktu_berjalan
+- Ketika play lagi, waktu melanjutkan dari waktu_berjalan
+- waktu_mulai di-update untuk melanjutkan perhitungan
+- Info "Waktu Berjalan" update setiap detik
+- Waktu selesai tersimpan total waktu yang sudah berjalan
+
+===========================================
+VERIFIKASI:
+===========================================
+
+Setelah upload dan clear cache:
+
+✅ Play → Jeda → Play lagi → Waktu melanjutkan dari jeda
+✅ Info "Waktu Berjalan" tampil di monitoring
+✅ Waktu jeda tersimpan dan dilanjutkan
+✅ Waktu selesai tersimpan dengan benar
+✅ Tidak ada reset waktu saat play lagi
+
+===========================================
+

@@ -1,0 +1,111 @@
+===========================================
+UPDATE LOG - deploy_cpanel
+===========================================
+
+Tanggal Update: 8 November 2024
+Build Version: main.2ce5bc32.js
+
+===========================================
+PERUBAHAN YANG DILAKUKAN:
+===========================================
+
+✅ 1. Update React Build
+   - File: static/js/main.2ce5bc32.js (BARU)
+   - File: static/css/main.48c0607a.css (SAMA)
+   - File: index.html (SUDAH UPDATE dengan referensi JS baru)
+   - File: asset-manifest.json (SUDAH UPDATE)
+
+✅ 2. Perbaikan Countdown Waktu
+   - File: api/index.php (SUDAH DIPERBAIKI)
+     * Perhitungan waktu_berjalan real-time
+     * Pastikan format integer yang benar
+   - File: client/src/pages/Monitoring.js (SUDAH DIPERBAIKI)
+     * Perbaikan parsing waktu_mulai
+     * Perbaikan perhitungan elapsedTime
+     * Perbaikan perhitungan remainingTime
+
+✅ 3. File Pendukung
+   - File: .htaccess (SUDAH ADA)
+   - File: api/config.php (SUDAH DIKONFIGURASI)
+   - File: api/.htaccess (SUDAH ADA)
+   - File: brigthon.jpeg (SUDAH ADA)
+
+===========================================
+STRUKTUR FOLDER deploy_cpanel:
+===========================================
+
+deploy_cpanel/
+├── api/
+│   ├── config.php          ← SUDAH DIKONFIGURASI dengan database
+│   ├── index.php            ← SUDAH DIPERBAIKI (perhitungan waktu real-time)
+│   └── .htaccess            ← Routing untuk API
+├── static/
+│   ├── css/
+│   │   ├── main.48c0607a.css
+│   │   └── main.48c0607a.css.map
+│   └── js/
+│       ├── main.2ce5bc32.js ← BUILD TERBARU (dengan perbaikan countdown)
+│       ├── main.2ce5bc32.js.LICENSE.txt
+│       └── main.2ce5bc32.js.map
+├── index.html                ← SUDAH UPDATE (referensi JS baru)
+├── asset-manifest.json        ← SUDAH UPDATE
+├── .htaccess                  ← Routing untuk React app dan API
+├── brigthon.jpeg              ← Image asset
+├── README.txt                 ← Instruksi upload
+├── INSTRUKSI_UPLOAD.txt       ← Panduan upload lengkap
+├── FIX_COUNTDOWN.txt          ← Panduan perbaikan countdown
+└── UPDATE_LOG.txt             ← File ini
+
+===========================================
+PERBAIKAN COUNTDOWN WAKTU:
+===========================================
+
+1. ✅ Perbaikan parsing waktu_mulai di frontend
+   - Handle format MySQL TIMESTAMP dengan benar
+   - Tambah validasi untuk mencegah error
+
+2. ✅ Perbaikan perhitungan waktu di API PHP
+   - Hitung waktu_berjalan real-time di server
+   - Pastikan format integer yang benar
+
+3. ✅ Perbaikan perhitungan remaining time
+   - Pastikan semua nilai adalah integer
+   - Handle nilai negatif dengan benar
+
+===========================================
+SIAP UNTUK UPLOAD:
+===========================================
+
+Folder deploy_cpanel/ sudah siap di-upload ke server!
+
+Semua file sudah:
+✅ Di-update dengan build terbaru
+✅ Diperbaiki untuk countdown waktu
+✅ Dikonfigurasi dengan database
+✅ Siap untuk production
+
+===========================================
+CARA UPLOAD:
+===========================================
+
+1. Login ke cPanel
+2. Buka File Manager
+3. Navigasi ke folder subdomain monitoring.solusicodekata.com
+4. Upload SEMUA isi folder deploy_cpanel/ ke root folder subdomain
+5. Set permission file (644 untuk file, 755 untuk folder)
+6. Clear browser cache
+7. Test aplikasi
+
+Lihat file INSTRUKSI_UPLOAD.txt untuk panduan lengkap.
+
+===========================================
+CATATAN:
+===========================================
+
+- Build React sudah di-update dengan perbaikan countdown
+- API PHP sudah diperbaiki dengan perhitungan waktu real-time
+- Semua file sudah siap untuk production
+- Database sudah dikonfigurasi di api/config.php
+
+===========================================
+

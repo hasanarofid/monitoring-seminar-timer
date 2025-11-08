@@ -1,0 +1,172 @@
+===========================================
+FOLDER SIAP UPLOAD KE SERVER
+===========================================
+
+Folder deploy_cpanel/ sudah siap di-upload ke server!
+Semua file sudah di-update dan dikonfigurasi dengan benar.
+
+Tanggal Update: 8 November 2024
+
+===========================================
+VERIFIKASI BUILD:
+===========================================
+
+✅ Build React sudah dijalankan
+✅ Tidak ada localhost:5000 di build
+✅ Menggunakan relative path /api
+✅ Semua file sudah di-copy ke deploy_cpanel/
+
+===========================================
+STRUKTUR FOLDER deploy_cpanel:
+===========================================
+
+deploy_cpanel/
+├── api/
+│   ├── config.php          ← SUDAH DIKONFIGURASI dengan database
+│   ├── index.php            ← SUDAH DIPERBAIKI (resume dari jeda)
+│   └── .htaccess            ← Routing untuk API
+├── static/
+│   ├── css/
+│   │   └── main.*.css       ← Build terbaru
+│   └── js/
+│       └── main.*.js        ← Build terbaru (dengan semua perbaikan)
+├── index.html               ← SUDAH UPDATE
+├── asset-manifest.json       ← SUDAH UPDATE
+├── .htaccess                ← Routing untuk React app dan API
+├── brigthon.jpeg             ← Image asset
+└── [file dokumentasi]
+
+===========================================
+FITUR YANG SUDAH DIPERBAIKI:
+===========================================
+
+✅ 1. CORS Error - SUDAH DIPERBAIKI
+   - Tidak ada lagi localhost:5000
+   - Menggunakan relative path /api
+
+✅ 2. Countdown Waktu - SUDAH DIPERBAIKI
+   - Perhitungan waktu sudah benar
+   - Format timestamp sudah benar
+
+✅ 3. Smooth Update - SUDAH DIPERBAIKI
+   - Tidak berkedip lagi
+   - Polling tanpa loading indicator
+   - Update lebih smooth
+
+✅ 4. Resume dari Jeda - SUDAH DIPERBAIKI
+   - Waktu melanjutkan dari jeda
+   - Tidak reset saat play lagi
+   - Info "Waktu Berjalan" tampil
+
+===========================================
+CARA UPLOAD KE SERVER:
+===========================================
+
+LANGKAH 1: Login ke cPanel
+---------------------------
+1. Login ke cPanel Anda
+2. Buka File Manager
+
+LANGKAH 2: Navigasi ke Folder Subdomain
+----------------------------------------
+1. Navigasi ke folder subdomain monitoring.solusicodekata.com
+   (Biasanya: public_html/monitoring/ atau monitoring/)
+
+LANGKAH 3: Upload Semua File
+-----------------------------
+1. Upload SEMUA isi folder deploy_cpanel/ ke root folder subdomain
+   
+   File yang perlu di-upload:
+   - ✅ Folder api/ (dengan semua isinya)
+   - ✅ Folder static/ (dengan semua isinya)
+   - ✅ File index.html
+   - ✅ File asset-manifest.json
+   - ✅ File .htaccess
+   - ✅ File brigthon.jpeg (jika ada)
+
+2. Pastikan struktur folder sama seperti di deploy_cpanel/
+
+LANGKAH 4: Set Permission File
+------------------------------
+Set permission file:
+- File PHP (.php): 644
+- File .htaccess: 644
+- File HTML/CSS/JS: 644
+- Folder (api/, static/): 755
+
+LANGKAH 5: Clear Browser Cache
+------------------------------
+1. Clear browser cache (Ctrl+Shift+Delete)
+2. Atau gunakan Incognito/Private mode
+3. Atau hard refresh (Ctrl+F5)
+
+LANGKAH 6: Test Aplikasi
+-------------------------
+1. Test API:
+   https://monitoring.solusicodekata.com/api/seminars
+   
+   Seharusnya muncul JSON response
+
+2. Test Aplikasi:
+   https://monitoring.solusicodekata.com
+   
+   Seharusnya:
+   - ✅ Tidak ada error CORS
+   - ✅ Aplikasi bisa load data
+   - ✅ Countdown waktu benar
+   - ✅ Tidak berkedip
+   - ✅ Resume dari jeda berfungsi
+   - ✅ Info "Waktu Berjalan" tampil
+
+===========================================
+KONFIGURASI DATABASE:
+===========================================
+
+Database sudah dikonfigurasi di file:
+api/config.php
+
+Konfigurasi:
+- DB_HOST: localhost
+- DB_USER: solz1468_solkit
+- DB_PASSWORD: DemiAllah@1
+- DB_NAME: solz1468_monitoring
+
+TIDAK PERLU EDIT LAGI - SUDAH SIAP!
+
+===========================================
+CATATAN PENTING:
+===========================================
+
+✅ Semua file sudah di-update
+✅ Build React sudah benar (tidak ada localhost:5000)
+✅ API sudah diperbaiki (resume dari jeda)
+✅ CSS sudah di-update (info waktu berjalan)
+✅ Semua fitur sudah diperbaiki
+
+===========================================
+TROUBLESHOOTING:
+===========================================
+
+Jika ada masalah setelah upload:
+
+1. Cek permission file (644 untuk file, 755 untuk folder)
+2. Cek file .htaccess sudah di-upload
+3. Clear browser cache
+4. Cek error log di cPanel
+5. Test API langsung di browser
+
+===========================================
+SELESAI!
+===========================================
+
+Folder deploy_cpanel/ sudah siap di-upload ke server!
+
+Setelah upload, aplikasi akan berfungsi dengan semua perbaikan:
+- ✅ Tidak ada error CORS
+- ✅ Countdown waktu benar
+- ✅ Tidak berkedip
+- ✅ Resume dari jeda berfungsi
+- ✅ Info "Waktu Berjalan" tampil
+
+===========================================
+
